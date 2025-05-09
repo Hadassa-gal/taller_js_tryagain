@@ -97,7 +97,6 @@ class TarjetaPersonaje extends HTMLElement {
                 border-radius: 10px;
                 width: 90%;
                 height:75vh;
-                max-width: 25vw;
                 text-align: center;
                 justify-self: center;
                 margin-top: 8vh;
@@ -125,15 +124,25 @@ class TarjetaPersonaje extends HTMLElement {
             .close:hover {
                 color: black;
             }
-            @media (max-width: 900px) {
+            @media (max-width: 1000px) {
                 .tarjeta {
-                width: 39vw;
-                height: 65vh;
-                box-shadow: 0px 0px 10px #E6E6EA;
+                    width: 39vw;
+                    height: 80vh;
+                    box-shadow: 0px 0px 10px #E6E6EA;
                 }
     
                 img {
-                height: 35vh;
+                    height: 45vh;
+                }
+                .modal{
+
+                }
+                .modal-content{
+                    width: 60vw;
+                    height:65vh;
+                }
+                .cont{
+                    justify-self: center;
                 }
             }
             </style>
