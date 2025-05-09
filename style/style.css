@@ -1,8 +1,75 @@
 *{
     box-sizing: border-box;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-
+    color: black;
+}
+body{
+    background-image: url(../storage/Fondo\ de\ arte\ pop\ abstracto\ cómico\ con\ ilustración\ de\ trueno\ _\ Vector\ Premium.jpeg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    background-color: #32292F;
+    justify-content: center;
+    justify-items: center;
+}
+.fondo{
+    position: fixed;
+    width: 100%;
+    margin: 0;
+    left: 0;
 }
 .nav{
+    display: flex;
+    background-color: rgba(95, 75, 182, 0.41);
+    box-shadow: 0px 0px 10px #E6E6EA;
+    border-radius: 10px;
+    width: 95.5vw;
+    margin: 0;
+    padding: 1vw;
+    gap: 1vw;
+    justify-content: center;
+    
+}
+.titulo{
+    font-size: 2rem;
+    color: #FE4A49;
+    text-shadow: 0px 0px 5px #611c1c;
+}
+.busqueda{
+    color: #E6E6EA;
+    text-decoration: none;
+    height: 5vh;
+    width: 30vw;
+    align-self: center;
+    padding: 1vw;
+    border-radius: 20px;
+    border: 3px solid #E6E6EA;
+    background-color: #5F4BB6;
+}
+.contenedor{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1vw;
+    padding: 10px;
+    width: 97vw;
+}
 
+@media (max-width: 900px) {
+    .nav{
+        height: 6vh;
+    }    
+    .busqueda{
+        height: 4vh;
+        width: 70vw;
+    }
+    .titulo{
+        font-size: 1rem;
+        margin: 0;
+        text-align: center;
+        align-self: center;
+    }
+    .contenedor{
+        gap: 2vw;
+    }
 }
