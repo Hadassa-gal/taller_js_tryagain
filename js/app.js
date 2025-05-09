@@ -1,107 +1,187 @@
 class TarjetaPersonaje extends HTMLElement {
     constructor() {
-       super();
-    this.attachShadow({ mode: 'open' });
-    this._data = null;
+        super();
+        this.attachShadow({ mode: 'open' });
+        this._data = null;
     }
-
+  
     set data(objeto) {
-    this._data = objeto;
-    this.render();
+        this._data = objeto;
+        this.render();
     }
 
+    connectedCallback(){
+        this.eventListener()
+    }
+  
     render() {
-    if (!this._data) return;
-
-    const { nombre, nombreClave, casa, anio, descripcion, foto } = this._data;
-
-    this.shadowRoot.innerHTML = `
-        <style>
-        .tarjeta {
-            position: relative;
-            overflow:hidden;
-            font-family: Arial, sans-serif;
-            border: 1px solid #ccc;
-            border-radius: 10px;
-            padding: 2vw;
-            width: 14vw;
-            height: 72vh;
-            background:rgba(95, 75, 182, 0.41);
-            -webkit-backdrop-filter: blur(5px);
-            backdrop-filter: blur(5px);
-            border: 3px solid #E6E6EA;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 0px 0px 7px #E6E6EA;
-        }
-        
-        img {
-            object-fit: cover;
-            width: 100%;
-            border-radius: 10px;
-            height: 40vh;
-            border: 3px solid #E6E6EA;
-            box-shadow: 0px 0px 30px #E6E6EA;
-        }
-        h2 {
-            margin: 0.5em 0 0.2em;
-            font-size: 1.2em;
-            color: #FED766;
-            text-shadow: 0px 0px 5px #611c1c;
-            justify-self: center;
-        }
-        h3 {
-            margin: 0;
-            font-size: 1em;
-            color: #32292F;
-
-        }
-        p {
-            font-size: 0.9em;
-            color: #161315;
-        }
-        button {
-            position:absolute;
-            bottom: 1vh;
-            right: 1vw;
-            margin: 0 auto;
-            padding: 8px 12px;
-            width: 100px;
-            background-color: #FE4A49;
-            color: #FED766;
-            border: none;
-            border-radius: 20px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #009FB7;
-            box-shadow: 0px 0px 5px #E6E6EA;
-        }
-        @media (max-width: 900px) {
-            .tarjeta{
+        if (!this._data) return;
+    
+        const { nombre, nombreClave, casa, anio, descripcion, descripcion_full, foto } = this._data;
+    
+        this.shadowRoot.innerHTML = `
+            <style>
+            .tarjeta {
+                position: relative;
+                font-family: Arial, sans-serif;
+                border: 1px solid #ccc;
+                border-radius: 10px;
+                padding: 2vw;
+                width: 14vw;
+                height: 72vh;
+                background: rgba(95, 75, 182, 0.41);
+                backdrop-filter: blur(5px);
+                border: 3px solid #E6E6EA;
+                display: flex;
+                flex-direction: column;
+                box-shadow: 0px 0px 7px #E6E6EA;
+            }
+            img {
+                object-fit: cover;
+                object-position: center;
+                border-radius: 10px;
+                width: 100%;
+                height: 40vh;
+                border: 3px solid #E6E6EA;
+                box-shadow: 0px 0px 30px #E6E6EA;
+            }
+            h2 {
+                margin: 0.5em 0 0.2em;
+                font-size: 1.2em;
+                color: #FED766;
+                text-shadow: 0px 0px 5px #611c1c;
+            }
+            h3 {
+                margin: 0;
+                font-size: 1em;
+                color: #32292F;
+            }
+            p {
+                font-size: 0.9em;
+                color: #161315;
+            }
+            button {
+                position: absolute;
+                bottom: 1vh;
+                right: 1vw;
+                padding: 8px 12px;
+                width: 100px;
+                background-color: #FE4A49;
+                color: #FED766;
+                border: none;
+                border-radius: 20px;
+                cursor: pointer;
+            }
+            button:hover {
+                background-color: #009FB7;
+                box-shadow: 0px 0px 5px #E6E6EA;
+            }
+            .modal {
+                display: none;
+                position: fixed;
+                z-index: 999;
+                left: 0;
+                top: 0;
+                width: 100vw;
+                height: 100vh;
+                background-color: rgba(0, 0, 0, 0.5);
+                justify-content: center;
+            }
+            .modal-content {
+                position: relative;
+                background-image: url(${foto});
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center;
+                padding: 2vw;
+                border-radius: 10px;
+                width: 90%;
+                height:75vh;
+                max-width: 25vw;
+                text-align: center;
+                justify-self: center;
+                margin-top: 8vh;
+                box-shadow: 0px 0px 10px  black;
+            }    
+            .cont{
+                justify-self: center;
+                position: absolute;
+                bottom: 2vh;
+                width: 85%;
+                background-color:  #E6E6EA;
+                border-radius: 10px;
+            }
+            .mnombre{
+                text-shadow: 1px 1px 0px #FE4A49;
+                color: #FED766;
+            }
+            .close {
+                color: #aaa;
+                float: right;
+                font-size: 28px;
+                font-weight: bold;
+                cursor: pointer;
+            }
+            .close:hover {
+                color: black;
+            }
+            @media (max-width: 900px) {
+                .tarjeta {
                 width: 39vw;
                 height: 65vh;
                 box-shadow: 0px 0px 10px #E6E6EA;
-            }
-            img{
+                }
+    
+                img {
                 height: 35vh;
+                }
             }
-        }
-        </style>
-        <div class="tarjeta">
-        <div class="imagen-tarjeta">
-            <img src="${foto}" alt="${nombre}">
-            <h2>${nombre}</h2>
-            <h3>${nombreClave}</h3>
-            <p><strong>Casa:</strong> ${casa}</p>
-            <p><strong>Año:</strong> ${anio}</p>
-            <p>${descripcion}</p>
-            <button>Ver más</button>
-        </div>
-        </div>
-    `;
-    }
+            </style>
+            <div class="tarjeta">
+                <img src="${foto}" alt="${nombre}">
+                <h2>${nombre}</h2>
+                <h3>${nombreClave}</h3>
+                <p><strong>Casa:</strong> ${casa}</p>
+                <p><strong>Año:</strong> ${anio}</p>
+                <p>${descripcion}</p>
+                <button id="abrir-modal">Ver más</button>
+            </div>
+            <div class="modal" id="modal">
+                <div class="modal-content">
+                    <span class="close" id="cerrar-modal">&times;</span>
+                    <h2 class="mnombre">${nombre} (${nombreClave})</h2>
+                    <div class="cont">
+                        <p><strong>Casa:</strong> ${casa}</p>
+                        <p><strong>Año:</strong> ${anio}</p>
+                        <p>${descripcion_full}</p>
+                    </div>
+                </div>
+            </div>
+        `;
+    };
+
+    eventListener(){
+        const modal = this.shadowRoot.getElementById("modal");
+        const abrir = this.shadowRoot.getElementById("abrir-modal");
+        const cerrar = this.shadowRoot.getElementById("cerrar-modal");
+
+        abrir.addEventListener("click", () => {
+            console.log("Click")
+            modal.style.display = "block";
+        });
+    
+        cerrar.addEventListener("click", () => {
+            modal.style.display = "none";
+        });
+    
+        modal.addEventListener("click", (e) => {
+            if (e.target === modal) {
+            modal.style.display = "none";
+            }
+        });
+    };
 }
+  
 customElements.define('tarjeta-personaje', TarjetaPersonaje);
 const personajes = {
     lista: [
@@ -151,7 +231,7 @@ const personajes = {
             descripcion_full: "Thanos es uno de los villanos más poderosos del universo Marvel. Busca las Gemas del Infinito para borrar la mitad de la vida y así restaurar el equilibrio del universo."
         },
         {
-            imagen: 'https://vignette.wikia.nocookie.net/marvelcrossroads/images/f/f3/Iron_Man(MK_XI).jpg/revision/latest?cb=20130224041523',
+            imagen: 'https://2.bp.blogspot.com/-3bHQ9Gs8WUc/VswhfIH5pQI/AAAAAAAATRk/2103Fg4yAVg/s0-Ic42/RCO010.jpg',
             nombre: "Iron Man",
             nombre_clave: "Iron Man",
             casa: "Marvel",
@@ -251,6 +331,7 @@ personajes.lista.forEach(personaje => {
     casa: personaje.casa,
     anio: personaje.anio_aparicion,
     descripcion: personaje.descripcion_resumen,
+    descripcion_full: personaje.descripcion_full,
     foto: personaje.imagen,
     };
     document.getElementById('contenedor').appendChild(tarjeta);
@@ -273,6 +354,7 @@ function renderizarFiltrados(texto) {
       casa: personaje.casa,
       anio: personaje.anio_aparicion,
       descripcion: personaje.descripcion_resumen,
+      descripcion_full: personaje.descripcion_full,
       foto: personaje.imagen,
     };
     contenedor.appendChild(tarjeta);
@@ -281,3 +363,4 @@ function renderizarFiltrados(texto) {
 inputBusqueda.addEventListener("input", (e) => {
   renderizarFiltrados(e.target.value);
 });
+
